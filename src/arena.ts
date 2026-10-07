@@ -1,3 +1,5 @@
+import type { Beyblade } from './beyblade.ts'
+
 export class Arena {
     centerX: number;
     centerY: number;
@@ -51,5 +53,32 @@ export class Arena {
         ctx.stroke();
     }
 
+    // Arena Boundary (Beyblade should bounce off upon contact)
+    handleBoundary(top: Beyblade, restitution = 0.8): void {
+        // Distance from Arena's Center
+        const dx = top.x - this.centerX;
+        const dy = top.y - this.centerY
+        const dist = Math.sqrt(dx * dx + dy * dy);
 
+        
+        const maxAllowedDist = this.radius - top.radius;
+
+        
+        // Collision check (Beyblade bounces off)
+        if (dist >= maxAllowedDist) {
+            const ux = dx / dist;
+            const uy = dy / dist;
+
+            top.x = this.centerX + ux * maxAllowedDist;
+            top.y = this.centerY + uy * maxAllowedDist;
+
+            const dot = top.vx * ux + top.vy * uy
+            
+            // Reflect Velocity
+            if (dot > 0) {
+                top.vx = (top.vx - 2 * dot * ux) * restitution;
+                top.vy = (top.vy - 2 * dot * uy) * restitution;
+            }
+        }
+    }
 }
