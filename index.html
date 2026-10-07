@@ -10,7 +10,33 @@
     <div id="app">
       <!-- Arena Container -->
       <div class="arena-container">
+        <!-- Arena Rim (and its beyblade) -->
         <canvas id="arena-canvas" width="600" height="600"></canvas>
+        <!-- Survival Bar -->
+        <div class="survival-bar">
+          <span id="current">Current: 0.0s</span>
+          <span class="title">Survival</span>
+          <span id="record">Record: 0.0s</span>
+        </div>
+        <!-- Speed/ RPM Gauge -->
+        <div class="gauge-container">
+          <div class="gauge-header">
+            <span>Speed</span>
+            <span>0 / 1000</span>
+          </div>
+          <div class="gauge-bar-bg">
+            <div class="gauge-bar-fill"></div>
+          </div>
+        </div>
+        <!-- Ripcord Launcher -->
+        <div class="ripcord-container">
+          <div class="ripcord-title">Ripcord</div>
+          <div class="ripcord-track">
+            <div class="ripcord-target"></div>
+            <div class="ripcord-needle"></div>
+          </div>
+          <button id="ripcord-btn" type="button">PULL IT</button>
+        </div>
       </div>
     </div>
     
