@@ -12,6 +12,7 @@ function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   arena.draw(ctx);
 
+  arena.handleSlope(beyblade);
   beyblade.update();
   arena.handleBoundary(beyblade);
   beyblade.draw(ctx);  
@@ -23,8 +24,8 @@ function animate() {
 const beyblade = new Beyblade(
   canvas.width / 2,
   canvas.height / 2,
-  1.5,
-  1.0,
+  6.0,
+  3.5,
   500,
   500,
   0.05
