@@ -57,7 +57,7 @@ export class Arena {
     handleBoundary(top: Beyblade, restitution = 0.8): void {
         // Distance from Arena's Center
         const dx = top.x - this.centerX;
-        const dy = top.y - this.centerY
+        const dy = top.y - this.centerY;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
         
@@ -74,11 +74,25 @@ export class Arena {
 
             const dot = top.vx * ux + top.vy * uy
             
-            // Reflect Velocity
+            // Reflect Velocity upon collision
             if (dot > 0) {
                 top.vx = (top.vx - 2 * dot * ux) * restitution;
                 top.vy = (top.vy - 2 * dot * uy) * restitution;
             }
         }
+    }
+
+    // Arena Slope
+    handleSlope(top: Beyblade, strength = 0.015): void {
+        const dx = top.x - this.centerX;
+        const dy = top.y - this.centerY;
+
+        // Inward Acceleration / Gravity
+        top.vx -= (dx / this.radius) * strength;
+        top.vy -= (dy / this.radius) * strength;
+            
+        // Damping / Friction
+        top.vx *= 0.995;
+        top.vy *= 0.995;
     }
 }
