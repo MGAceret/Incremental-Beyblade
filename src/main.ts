@@ -13,6 +13,7 @@ function animate() {
   arena.draw(ctx);
 
   beyblade.update();
+  arena.handleBoundary(beyblade);
   beyblade.draw(ctx);  
 
   requestAnimationFrame(animate);
