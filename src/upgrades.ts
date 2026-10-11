@@ -48,3 +48,31 @@ export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade): void 
             break;
     }
 }
+
+// Render Upgrade List
+export function renderUpgradeModule(upgrade: Upgrade): string {
+    const cost = getUpgradeCost(upgrade);
+    const effect = upgrade.effectText(upgrade.level);
+
+    return `
+        <div class="upgrade-module">
+            <div class="upgrade-module-header">
+                <h2>${upgrade.name}</h2>
+                <div class="upgrade-module-level">
+                    <h2>Lvl <span>${upgrade.level}</span></h2>
+                </div>
+            </div>
+            <div class="upgrade-module-desc">
+                <span>${upgrade.description}</span>
+            </div>
+            <div class="upgrade-module-effect">
+                Effect: <span>${effect}</span>
+            </div>
+            <div class="upgrade-module-footer">
+            <button class="buy-upgrade-btn" data-id="${upgrade.id}" type="button">
+                <span>${cost}</span> ⚡
+            </button>
+            </div>
+        </div>
+    `
+}

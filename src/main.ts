@@ -1,7 +1,7 @@
 import './style.css'
 import { Arena } from './arena.ts'
 import { Beyblade } from './beyblade.ts'
-import { applyUpgradeEffect, getUpgradeCost, upgrades } from './upgrades.ts';
+import { applyUpgradeEffect, getUpgradeCost, upgrades, renderUpgradeModule } from './upgrades.ts';
 
 // [ Canvas and its Context ]
 const canvas = document.querySelector<HTMLCanvasElement>('#arena-canvas')!;
@@ -28,14 +28,6 @@ const speedText = document.querySelector<HTMLSpanElement>('.gauge-header span:la
 const speedBarFill = document.querySelector<HTMLDivElement>('.gauge-bar-fill')!;
 const ripcordNeedle = document.querySelector<HTMLDivElement>('.ripcord-needle')!;
 const ripcordBtn = document.querySelector<HTMLButtonElement>('#ripcord-btn')!;
-
-// Upgrade Sets
-const buyBearingBtn = document.querySelector<HTMLButtonElement>('#buy-bearing-btn')!;
-const bearingLvl = document.querySelector<HTMLSpanElement>('#bearing-lvl')!;
-const bearingCost = document.querySelector<HTMLSpanElement>('#bearing-cost')!;
-const bearingDesc = document.querySelector<HTMLSpanElement>('#bearing-desc')!;
-const bearingEffect = document.querySelector<HTMLSpanElement>('#bearing-effect')!;
-
 
 // Game State
 let isSpinning = false;
@@ -92,66 +84,6 @@ ripcordBtn.addEventListener('click', () => {
 const energyAmount = document.querySelector<HTMLSpanElement>('#energy-amount')!;
 let spinEnergy = 0;
 
-// Beyblade Upgrades
-const tipUpgrade = upgrades[0];
-bearingCost.textContent = getUpgradeCost(tipUpgrade).toString();
-bearingDesc.textContent = tipUpgrade.description;
-
-buyBearingBtn.addEventListener('click', () => {
-  const cost = getUpgradeCost(tipUpgrade);
-
-  if (spinEnergy >= cost) {
-    // 1. Spend
-    spinEnergy -= cost;
-    energyAmount.textContent = Math.floor(spinEnergy).toString();
-    
-    // 2. Level up
-    tipUpgrade.level++;
-    energyAmount.textContent = Math.floor(spinEnergy).toString();
-
-    // 3. Apply upgraded physiscs
-    applyUpgradeEffect(tipUpgrade, beyblade);
-
-    // 4. Update UI
-    bearingLvl.textContent = tipUpgrade.level.toString();
-    bearingCost.textContent = getUpgradeCost(tipUpgrade).toString();
-    bearingEffect.textContent = tipUpgrade.effectText(tipUpgrade.level);
-  }
-});
-
-const buyPullcordBtn = document.querySelector<HTMLButtonElement>('#buy-pullcord-btn')!;
-const pullcordLvl = document.querySelector<HTMLSpanElement>('#pullcord-lvl')!;
-const pullcordCost = document.querySelector<HTMLSpanElement>('#pullcord-cost')!;
-const pullcordDesc = document.querySelector<HTMLSpanElement>('#pullcord-desc')!;
-const pullcordEffect = document.querySelector<HTMLSpanElement>('#pullcord-effect')!;
-
-const pullcordUpgrade = upgrades[1];
-pullcordDesc.textContent = pullcordUpgrade.description;
-pullcordCost.textContent = getUpgradeCost(pullcordUpgrade).toString();
-
-
-buyPullcordBtn.addEventListener('click', () => {
-  const cost = getUpgradeCost(pullcordUpgrade);
-
-  if (spinEnergy >= cost) {
-    // 1. Spend
-    spinEnergy -= cost;
-    energyAmount.textContent = Math.floor(spinEnergy).toString();
-    
-    // 2. Level up
-    pullcordUpgrade.level++;
-    energyAmount.textContent = Math.floor(spinEnergy).toString();
-
-    // 3. Apply upgraded physiscs
-    applyUpgradeEffect(pullcordUpgrade, beyblade);
-
-    // 4. Update UI
-    pullcordLvl.textContent = pullcordUpgrade.level.toString();
-    pullcordCost.textContent = getUpgradeCost(pullcordUpgrade).toString();
-    pullcordEffect.textContent = pullcordUpgrade.effectText(pullcordUpgrade.level);
-  }
-});
-
 // [ Animation of Canvas ]
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -195,3 +127,34 @@ function animate() {
 }
 
 animate();
+
+const upgradesList = document.querySelector<HTMLDivElement>('#upgrades-list')!;
+let currentCategory = 'chassis';
+
+function refreshUpgrades() {
+  const filtered = upgrades.filter(u => u.category === currentCategory);
+  upgradesList.innerHTML = filtered.map(renderUpgradeModule).join('');
+}
+
+refreshUpgrades();
+
+upgradesList.addEventListener('click', (e) => {
+  const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.buy-upgrade-btn');
+  if (!btn) return;
+
+  const upgradeId = btn.dataset.id;
+  const upgrade = upgrades.find(u => u.id === upgradeId);
+  if (!upgrade) return;
+
+  const cost = getUpgradeCost(upgrade);
+  if (spinEnergy >= cost) {
+    spinEnergy -= cost;
+    energyAmount.textContent = Math.floor(spinEnergy).toString();
+  
+
+  upgrade.level++;
+  applyUpgradeEffect(upgrade, beyblade);
+
+  refreshUpgrades();
+  }
+});
