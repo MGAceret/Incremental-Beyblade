@@ -5,6 +5,7 @@
   --border-dark: #4a2e18;
   --accent-brown: #5c3413;
   --accent-amber: #d97706;
+  --accent-bone: #E4DAC4;
   --accent-light-amber: #f5d09f;
   --text-dark: #382313;
   --text-light: #ffffff;
@@ -13,7 +14,7 @@
 
 body {
   margin: 0;
-  padding: 24px;
+  padding: 24px 0;
   background-color: var(--bg-main);
   font-family: var(--font-family);
   display: flex;
@@ -32,6 +33,8 @@ header {
   grid-template-columns: 2fr 1fr;
   border-bottom: 2px solid var(--border-dark);
   width: 100%;
+  padding: 0 24px;
+  box-sizing: border-box;
 }
 
 .brand {
@@ -75,6 +78,8 @@ header {
 #app {
   display: grid;
   grid-template-columns: 1fr 2fr;
+  gap: 100px;
+  padding: 0 200px;
 }
 
 /* [ Left Column: Arena ] */
@@ -195,3 +200,88 @@ header {
 
 
 /* [ Right Column: Upgrades ] */
+.upgrade-container {
+  background-color: var(--text-light);
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.resources {
+  padding: 0 16px;
+}
+
+.upgrade-category {
+  display: flex;
+  width: 100%;
+}
+
+.category-btn {
+  width: 25%;
+  background-color: var(--bg-main);
+  color: var(--accent-brown);
+  border: 0;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.category-btn-active {
+  width: 25%;
+  background-color: var(--text-light);
+  border: none;
+  border-top: 3px solid var(--accent-amber);
+  border-bottom: 3px solid var(--accent-amber);
+  color: var(--text-dark);
+  font-size: 24px;
+  font-weight: 800;
+  display: inline;
+}
+
+.upgrade-module {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  border: 5px solid var(--accent-brown);
+  border-radius: 10px 30px 10px 30px;
+  padding: 16px;
+  margin: 16px;
+  background-color: var(--bg-main);
+}
+
+.upgrade-module-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.upgrade-module-header h2 {
+  margin: 0;
+}
+
+.upgrade-module-level {
+  border: 5px solid var(--accent-brown);
+  border-radius: 10px 30px 10px 30px;
+  padding: 3px 12px;
+  text-align: center;
+  background-color: var(--accent-bone);
+  color: var(--accent-brown);
+}
+
+.upgrade-module-desc {
+
+}
+
+.upgrade-module-effect {
+  color: var(--accent-amber);
+}
+
+.upgrade-module-footer {
+  display: flex;
+  align-items: center;
+}
+
+.upgrade-module-footer button {
+  background-color: var(--accent-brown);
+  color: var(--text-light);
+  border: 0;
+  border-radius: 20px;
+  padding: 6px 15px;
+  width: 100%;
+}
