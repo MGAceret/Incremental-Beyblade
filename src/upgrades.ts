@@ -1,0 +1,39 @@
+import { Beyblade } from './beyblade.ts'
+
+export interface Upgrade {
+    id: string;
+    name: string;
+    category: 'chassis' | 'ripcord' | 'economy' | 'rivals';
+    level: number;
+    baseCost: number;
+    costMultiplier: number;
+    description: string;
+    effectText: (level: number) => string;
+}
+
+export const upgrades: Upgrade[] = [
+    {
+        id: 'bearing_tip',
+        name: 'Bearing Tip',
+        category: 'chassis',
+        level: 0,
+        baseCost: 10,
+        costMultiplier: 1.5,
+        description: 'Reduces spin decay rate so your top spins longer',
+        effectText: (lvl) => `-${lvl * 15}% Friction Decay`,
+    },
+];
+
+export function getUpgradeCost (upgrade: Upgrade): number {
+    return Math.floor(upgrade.baseCost * Math.pow(upgrade.costMultiplier, upgrade.level))
+}
+
+export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade): void {
+    switch (upgrade.id) {
+        case 'bearing_tip':
+            beyblade.decayRate = 0.05 * Math.pow(0.85, upgrade.level);
+            break;
+        case 'ripcord_power':
+            break;
+    }
+}
