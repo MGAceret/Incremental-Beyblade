@@ -1,6 +1,7 @@
 import './style.css'
 import { Arena } from './arena.ts'
 import { Beyblade } from './beyblade.ts'
+import { applyUpgradeEffect, getUpgradeCost, upgrades } from './upgrades.ts';
 
 // [ Canvas and its Context ]
 const canvas = document.querySelector<HTMLCanvasElement>('#arena-canvas')!;
@@ -27,6 +28,12 @@ const speedText = document.querySelector<HTMLSpanElement>('.gauge-header span:la
 const speedBarFill = document.querySelector<HTMLDivElement>('.gauge-bar-fill')!;
 const ripcordNeedle = document.querySelector<HTMLDivElement>('.ripcord-needle')!;
 const ripcordBtn = document.querySelector<HTMLButtonElement>('#ripcord-btn')!;
+
+// Upgrade Sets
+const buyBearingBtn = document.querySelector<HTMLButtonElement>('#buy-bearing-btn')!;
+const bearingLvl = document.querySelector<HTMLSpanElement>('#bearing-lvl')!;
+const bearingCost = document.querySelector<HTMLSpanElement>('#bearing-cost')!;
+
 
 // Game State
 let isSpinning = false;
@@ -80,6 +87,35 @@ ripcordBtn.addEventListener('click', () => {
   isSpinning = true;
 });
 
+// Resource Earning
+const energyAmount = document.querySelector<HTMLSpanElement>('#energy-amount')!;
+let spinEnergy = 0;
+
+// Beyblade Upgrades
+const tipUpgrade = upgrades[0];
+bearingCost.textContent = getUpgradeCost(tipUpgrade).toString();
+
+buyBearingBtn.addEventListener('click', () => {
+  const cost = getUpgradeCost(tipUpgrade);
+
+  if (spinEnergy >= cost) {
+    // 1. Spend
+    spinEnergy -= cost;
+    energyAmount.textContent = Math.floor(spinEnergy).toString();
+    
+    // 2. Level up
+    tipUpgrade.level++;
+    energyAmount.textContent = Math.floor(spinEnergy).toString();
+
+    // 3. Apply upgraded physiscs
+    applyUpgradeEffect(tipUpgrade, beyblade);
+
+    // 4. Update UI
+    bearingLvl.textContent = tipUpgrade.level.toString();
+    bearingCost.textContent = getUpgradeCost(tipUpgrade).toString();
+  }
+});
+
 // [ Animation of Canvas ]
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -103,6 +139,10 @@ function animate() {
     ${Math.round(beyblade.maxRpm)}`;
     const rpmPercent  = (beyblade.rpm / beyblade.maxRpm) * 100;
     speedBarFill.style.width = `${rpmPercent}%`;
+
+    // Energy Generation
+    spinEnergy += (beyblade.rpm / 60) * 0.02;
+    energyAmount.textContent = Math.floor(spinEnergy).toString(); 
 
     // Round End Check
     if (beyblade.rpm <= 0) {
