@@ -20,7 +20,17 @@ export const upgrades: Upgrade[] = [
         baseCost: 10,
         costMultiplier: 1.5,
         description: 'Reduces spin decay rate so your top spins longer',
-        effectText: (lvl) => `-${lvl * 15}% Friction Decay`,
+        effectText: (lvl) => `${lvl * 15}% Friction Decay`,
+    },
+    {
+        id: 'heavy_pullcord',
+        name: 'Heavy Pullcord',
+        category: 'ripcord',
+        level: 0,
+        baseCost: 50,
+        costMultiplier: 2.5,
+        description: 'Increases base launch RPM upon Pulling',
+        effectText: (lvl) => `${lvl * 100} Launch RPM`,
     },
 ];
 
@@ -33,7 +43,8 @@ export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade): void 
         case 'bearing_tip':
             beyblade.decayRate = 0.05 * Math.pow(0.85, upgrade.level);
             break;
-        case 'ripcord_power':
+        case 'heavy_pullcord':
+            beyblade.maxRpm += 100;
             break;
     }
 }

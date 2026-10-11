@@ -63,16 +63,15 @@ ripcordBtn.addEventListener('click', () => {
   if (isSpinning) return; // Cannot launch if the beyblade is still active
 
   const accuracy = Math.abs(needlePos - 50);
-  let launchRpm = 1000;
-  let launchSpeed = 5.0;
+  let launchRpm = beyblade.maxRpm;
+  let launchSpeed = null;
 
   if (accuracy <= 5) {
     // Critical Launch
-    launchRpm = 2000;
+    launchRpm *= 3;
     launchSpeed = 8.0;
   } else {
     // Weak Launch
-    launchRpm = 600;
     launchSpeed = 3.0;
   }
 
@@ -117,6 +116,39 @@ buyBearingBtn.addEventListener('click', () => {
     bearingLvl.textContent = tipUpgrade.level.toString();
     bearingCost.textContent = getUpgradeCost(tipUpgrade).toString();
     bearingEffect.textContent = tipUpgrade.effectText(tipUpgrade.level);
+  }
+});
+
+const buyPullcordBtn = document.querySelector<HTMLButtonElement>('#buy-pullcord-btn')!;
+const pullcordLvl = document.querySelector<HTMLSpanElement>('#pullcord-lvl')!;
+const pullcordCost = document.querySelector<HTMLSpanElement>('#pullcord-cost')!;
+const pullcordDesc = document.querySelector<HTMLSpanElement>('#pullcord-desc')!;
+const pullcordEffect = document.querySelector<HTMLSpanElement>('#pullcord-effect')!;
+
+const pullcordUpgrade = upgrades[1];
+pullcordDesc.textContent = pullcordUpgrade.description;
+pullcordCost.textContent = getUpgradeCost(pullcordUpgrade).toString();
+
+
+buyPullcordBtn.addEventListener('click', () => {
+  const cost = getUpgradeCost(pullcordUpgrade);
+
+  if (spinEnergy >= cost) {
+    // 1. Spend
+    spinEnergy -= cost;
+    energyAmount.textContent = Math.floor(spinEnergy).toString();
+    
+    // 2. Level up
+    pullcordUpgrade.level++;
+    energyAmount.textContent = Math.floor(spinEnergy).toString();
+
+    // 3. Apply upgraded physiscs
+    applyUpgradeEffect(pullcordUpgrade, beyblade);
+
+    // 4. Update UI
+    pullcordLvl.textContent = pullcordUpgrade.level.toString();
+    pullcordCost.textContent = getUpgradeCost(pullcordUpgrade).toString();
+    pullcordEffect.textContent = pullcordUpgrade.effectText(pullcordUpgrade.level);
   }
 });
 
