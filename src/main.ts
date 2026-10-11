@@ -33,6 +33,8 @@ const ripcordBtn = document.querySelector<HTMLButtonElement>('#ripcord-btn')!;
 const buyBearingBtn = document.querySelector<HTMLButtonElement>('#buy-bearing-btn')!;
 const bearingLvl = document.querySelector<HTMLSpanElement>('#bearing-lvl')!;
 const bearingCost = document.querySelector<HTMLSpanElement>('#bearing-cost')!;
+const bearingDesc = document.querySelector<HTMLSpanElement>('#bearing-desc')!;
+const bearingEffect = document.querySelector<HTMLSpanElement>('#bearing-effect')!;
 
 
 // Game State
@@ -94,6 +96,7 @@ let spinEnergy = 0;
 // Beyblade Upgrades
 const tipUpgrade = upgrades[0];
 bearingCost.textContent = getUpgradeCost(tipUpgrade).toString();
+bearingDesc.textContent = tipUpgrade.description;
 
 buyBearingBtn.addEventListener('click', () => {
   const cost = getUpgradeCost(tipUpgrade);
@@ -113,6 +116,7 @@ buyBearingBtn.addEventListener('click', () => {
     // 4. Update UI
     bearingLvl.textContent = tipUpgrade.level.toString();
     bearingCost.textContent = getUpgradeCost(tipUpgrade).toString();
+    bearingEffect.textContent = tipUpgrade.effectText(tipUpgrade.level);
   }
 });
 
