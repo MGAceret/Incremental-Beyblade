@@ -32,6 +32,17 @@ export const upgrades: Upgrade[] = [
         description: 'Increases base launch RPM upon Pulling',
         effectText: (lvl) => `${lvl * 100} Launch RPM`,
     },
+    
+    /* Upgrade template for the beyblades */
+    // {
+    //     id: ,
+    //     name: ,
+    //     category: ,
+    //     baseCost: ,
+    //     costMultiplier: ,
+    //     description: ,
+    //     effectText: ,
+    // },
 ];
 
 export function getUpgradeCost (upgrade: Upgrade): number {
