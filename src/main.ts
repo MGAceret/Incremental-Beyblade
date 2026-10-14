@@ -158,3 +158,37 @@ upgradesList.addEventListener('click', (e) => {
   refreshUpgrades();
   }
 });
+
+// Upgrade list refesh according to selected upgrade category
+const upgradeCategory = document.querySelector<HTMLDivElement>('.upgrade-category')!;
+upgradeCategory.addEventListener('click', (e) => {
+  const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.category-btn');
+  console.log(btn);
+  if (!btn) return;
+
+  const categoryName = btn.id;
+  console.log(categoryName);
+  if (!categoryName) return;
+
+  if (categoryName === 'chassis') {
+    currentCategory = 'chassis';
+    document.querySelector('.category-btn-active')?.classList.remove('category-btn-active');
+    btn.classList.add('category-btn-active');
+    
+  } else if (categoryName === 'ripcord') {
+    currentCategory = 'ripcord';
+    document.querySelector('.category-btn-active')?.classList.remove('category-btn-active');
+    btn.classList.add('category-btn-active');
+  } else if (categoryName === 'economy') {
+    currentCategory = 'economy';
+    document.querySelector('.category-btn-active')?.classList.remove('category-btn-active');
+    btn.classList.add('category-btn-active');
+  } else if (categoryName === 'rivals') {
+    currentCategory = 'rivals';
+    document.querySelector('.category-btn-active')?.classList.remove('category-btn-active');
+    btn.classList.add('category-btn-active');
+  } else {
+    return;
+  }
+  refreshUpgrades();
+});
