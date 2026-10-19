@@ -14,6 +14,9 @@ export class Beyblade {
     radius: number = 20;
     angle: number = 0;
 
+    // Resource
+    energyMultiplier: number = 1.0;
+
     constructor(x:number, y: number, vx: number, vy: number, rpm: number, maxRpm: number, decayRate: number) {
         this.x = x;
         this.y = y;
