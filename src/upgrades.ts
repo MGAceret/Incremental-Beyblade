@@ -40,7 +40,7 @@ export const upgrades: Upgrade[] = [
         baseCost: 20,
         costMultiplier: 2.5,
         description: 'Harvest more spin energy',
-        effectText: (lvl) => ``,
+        effectText: (lvl) => `${lvl * 2}% Energy Rate`,
     },
     {
         id: 'scrap_magnet',
@@ -50,7 +50,7 @@ export const upgrades: Upgrade[] = [
         baseCost: 15,
         costMultiplier: 2,
         description: 'Magnetizes and recovers bonus parts whenever a rival is eliminated',
-        effectText: (lvl) => ``,
+        effectText: (lvl) => `${lvl * 1.2}% More parts obtained`,
     },
     {
         id: 'deployment_frequency',
@@ -60,7 +60,7 @@ export const upgrades: Upgrade[] = [
         baseCost: 12000,
         costMultiplier: 1.5,
         description: 'Accelerates minimum rival spawn interval',
-        effectText: (lvl) => ``,    
+        effectText: (lvl) => `${60 - lvl}s spawn`,    
     },
     {
         id: 'rival_overclock',
@@ -107,6 +107,9 @@ export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade): void 
             break;
         case 'heavy_pullcord':
             beyblade.maxRpm += 100;
+            break;
+        case 'dynamo_coil':
+            beyblade.energyMultiplier = 1.0 + (upgrade.level * 0.2);
             break;
     }
 }
