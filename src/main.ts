@@ -109,7 +109,7 @@ function animate() {
     speedBarFill.style.width = `${rpmPercent}%`;
 
     // Energy Generation
-    spinEnergy += (beyblade.rpm / 60) * 0.02;
+    spinEnergy += (beyblade.rpm / 60) * 0.02 * beyblade.energyMultiplier;
     energyAmount.textContent = Math.floor(spinEnergy).toString(); 
 
     // Round End Check
