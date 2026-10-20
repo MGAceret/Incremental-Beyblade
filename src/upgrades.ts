@@ -1,4 +1,5 @@
 import { Beyblade } from './beyblade.ts'
+import { Rivals } from './rivals.ts'
 
 export interface Upgrade {
     id: string;
@@ -100,7 +101,7 @@ export function getUpgradeCost (upgrade: Upgrade): number {
     return Math.floor(upgrade.baseCost * Math.pow(upgrade.costMultiplier, upgrade.level))
 }
 
-export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade): void {
+export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade, bot: Rivals): void {
     switch (upgrade.id) {
         case 'bearing_tip':
             beyblade.decayRate = 0.05 * Math.pow(0.85, upgrade.level);
@@ -111,13 +112,16 @@ export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade): void 
             beyblade.baseMaxRpm = 500 + (upgrade.level * 100);
             break;
         case 'dynamo_coil':
-            beyblade.energyMultiplier = 1.0 + (upgrade.level * 0.2);
+            beyblade.energyMultiplier = 1.0 + (upgrade.level * 0.4);
             break;
         case 'scrap_magnet':
+            beyblade.partMultiplier = 1.0 + (upgrade.level * 0.2);
             break;
         case 'deployment_frequency':
             break;
         case 'rival_overclock':
+            bot.rpm = 600 + (upgrade.level * 1.5);
+            bot.maxRpm = 600 + (upgrade.level * 1.5);
             break;
     }
 }
