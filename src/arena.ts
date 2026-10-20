@@ -1,4 +1,5 @@
 import type { Beyblade } from './beyblade.ts'
+import type { Rivals } from './rivals.ts';
 
 export class Arena {
     centerX: number;
@@ -94,5 +95,25 @@ export class Arena {
         // Damping / Friction
         top.vx *= 0.995;
         top.vy *= 0.995;
+    }
+
+    handleCollision(top1: Beyblade, top2: Beyblade): void {
+        const dx = top2.x - top1.x;
+        const dy = top2.y - top1.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        const minDist = top1.radius + top2.radius;
+
+        // Collision check
+        if (dist < minDist) {
+            const vx = dx / dist;
+            const vy = dy / dist;
+            const ov = minDist - dist;
+            top1.vx = vx * (ov / 2);
+            top1.vy = vy * (ov / 2);
+            top2.vx = vx * (ov / 2);
+            top2.vy = vy * (ov / 2);
+            console.log("Clash!");
+        }
     }
 }
