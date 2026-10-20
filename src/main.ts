@@ -1,6 +1,7 @@
 import './style.css'
 import { Arena } from './arena.ts'
 import { Beyblade } from './beyblade.ts'
+import { Rivals } from './rivals.ts';
 import { applyUpgradeEffect, getUpgradeCost, upgrades, renderUpgradeModule } from './upgrades.ts';
 
 // [ Canvas and its Context ]
@@ -12,6 +13,16 @@ const arena = new Arena(canvas.width / 2, canvas.height / 2, 250)
 
 // [ Beyblade ]
 const beyblade = new Beyblade(
+  canvas.width / 2,
+  canvas.height / 2,
+  6.0,
+  3.5,
+  500,
+  500,
+  0.05
+);
+
+const bot = new Rivals(
   canvas.width / 2,
   canvas.height / 2,
   6.0,
@@ -101,6 +112,11 @@ function animate() {
     beyblade.update();
     arena.handleBoundary(beyblade);
     beyblade.draw(ctx);  
+    
+    arena.handleSlope(bot);
+    bot.update();
+    arena.handleBoundary(bot);
+    bot.draw(ctx);  
 
     // Survival Timer
     survivalTime += 1 / 60
