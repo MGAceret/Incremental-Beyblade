@@ -32,6 +32,9 @@ const bot = new Rivals(
   0.05
 );
 
+// Initialization via array
+const tops: Beyblade[] = [beyblade, bot];
+
 // Survival Mode Cycle
 const currentSurvival = document.querySelector<HTMLSpanElement>('#current')!;
 const recordSurvival = document.querySelector<HTMLSpanElement>('#record')!;
@@ -87,6 +90,14 @@ ripcordBtn.addEventListener('click', () => {
   beyblade.rpm = launchRpm;
   beyblade.maxRpm = launchRpm;
 
+  // Reset beyblade(rival) state
+  bot.x = canvas.width / 2 - 100;
+  bot.y = canvas.height / 2;
+  bot.vx = (Math.random() - 0.5) * 2;
+  bot.vy = launchSpeed * (-0.8);
+  bot.rpm = 100;
+  bot.maxRpm = 100;
+
   // Reset round state
   survivalTime = 0;
   isSpinning = true;
@@ -95,6 +106,7 @@ ripcordBtn.addEventListener('click', () => {
 // Resource Earning
 const energyAmount = document.querySelector<HTMLSpanElement>('#energy-amount')!;
 let spinEnergy = 0;
+let rivalPart = 0;
 
 //  [ Initial Loading ]
 speedText.textContent = `0 / ${Math.round(beyblade.baseMaxRpm)}`;
@@ -108,15 +120,24 @@ function animate() {
 
   if (isSpinning) {
     // Physics Simulation
-    arena.handleSlope(beyblade);
-    beyblade.update();
-    arena.handleBoundary(beyblade);
-    beyblade.draw(ctx);  
-    
-    arena.handleSlope(bot);
-    bot.update();
-    arena.handleBoundary(bot);
-    bot.draw(ctx);  
+    for (const top of tops) {
+      arena.handleSlope(top);
+      top.update();
+      arena.handleBoundary(top);
+      top.draw(ctx);  
+    }
+
+    // Rival Elimination Check, Rival Respawn, Rival Part Reward
+    if (bot.rpm <= 0) {
+      rivalPart += Math.floor(bot.partsReward * beyblade.partMultiplier);
+      console.log(rivalPart);
+      bot.x = canvas.width / 2 - 100;
+      bot.y = canvas.height / 2;
+      bot.vx = (Math.random() - 0.5) * 4;
+      bot.vy = (Math.random() - 0.5) * 4;
+      bot.rpm = 100;
+      bot.maxRpm = 100;
+    }
 
     // Survival Timer
     survivalTime += 1 / 60
@@ -174,7 +195,7 @@ upgradesList.addEventListener('click', (e) => {
   
 
   upgrade.level++;
-  applyUpgradeEffect(upgrade, beyblade);
+  applyUpgradeEffect(upgrade, beyblade, bot);
 
   refreshUpgrades();
   }
