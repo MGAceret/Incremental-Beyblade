@@ -60,11 +60,10 @@ ripcordBtn.addEventListener('click', () => {
 
   if (accuracy <= 5) {
     // Critical Launch
-    launchRpm = beyblade.baseMaxRpm * 2;
+    launchRpm *= 3;
     launchSpeed = 8.0;
   } else {
     // Weak Launch
-    launchRpm = beyblade.baseMaxRpm * 0.6;
     launchSpeed = 3.0;
   }
 
@@ -84,9 +83,6 @@ ripcordBtn.addEventListener('click', () => {
 // Resource Earning
 const energyAmount = document.querySelector<HTMLSpanElement>('#energy-amount')!;
 let spinEnergy = 0;
-
-//  [ Initial Loading ]
-speedText.textContent = `0 / ${Math.round(beyblade.baseMaxRpm)}`;
 
 // [ Animation of Canvas ]
 function animate() {
@@ -119,7 +115,6 @@ function animate() {
     // Round End Check
     if (beyblade.rpm <= 0) {
       isSpinning = false;
-      speedText.textContent = `0 / ${Math.round(beyblade.maxRpm)}`
       // Set record if current time is over the record
       if (survivalTime > recordTime) {
         recordTime = survivalTime;
