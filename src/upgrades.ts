@@ -105,11 +105,19 @@ export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade): void 
         case 'bearing_tip':
             beyblade.decayRate = 0.05 * Math.pow(0.85, upgrade.level);
             break;
+        case 'weight_disc':
+            break;
         case 'heavy_pullcord':
-            beyblade.maxRpm += 100;
+            beyblade.baseMaxRpm = 500 + (upgrade.level * 100);
             break;
         case 'dynamo_coil':
             beyblade.energyMultiplier = 1.0 + (upgrade.level * 0.2);
+            break;
+        case 'scrap_magnet':
+            break;
+        case 'deployment_frequency':
+            break;
+        case 'rival_overclock':
             break;
     }
 }
