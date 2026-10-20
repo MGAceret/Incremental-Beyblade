@@ -125,6 +125,7 @@ function animate() {
       top.update();
       arena.handleBoundary(top);
       top.draw(ctx);  
+      arena.handleCollision(beyblade, bot);
     }
 
     // Rival Elimination Check, Rival Respawn, Rival Part Reward
