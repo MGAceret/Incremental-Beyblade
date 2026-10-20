@@ -8,7 +8,6 @@ export class Beyblade {
     // Spin / Health
     rpm: number;
     maxRpm: number;
-    baseMaxRpm: number = 500;
     decayRate: number;
 
     // Misc
