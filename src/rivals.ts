@@ -12,9 +12,9 @@ export class Rivals extends Beyblade {
         // Outer Body Circle
         ctx.beginPath();
         ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = '#d13324';
+        ctx.fillStyle = '#32363c';
         ctx.fill();
-        ctx.strokeStyle = '#451a03';
+        ctx.strokeStyle = '#ca2828';
         ctx.lineWidth = 3;
         ctx.stroke();
         
@@ -23,13 +23,13 @@ export class Rivals extends Beyblade {
         ctx.lineTo(this.radius, 0);
         ctx.moveTo(0, -this.radius);
         ctx.lineTo(0, this.radius);
-        ctx.strokeStyle = '#451a03';
+        ctx.strokeStyle = '#ca2828';
         ctx.stroke();
 
         // Core
         ctx.beginPath();
         ctx.arc(0, 0, this.radius * 0.35, 0, Math.PI * 2);
-        ctx.fillStyle = '#ffffff';
+        ctx.fillStyle = '#ca2828';
         ctx.fill();
         ctx.stroke();
 
