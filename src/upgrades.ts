@@ -1,4 +1,5 @@
 import { Beyblade } from './beyblade.ts'
+import { Rivals } from './rivals.ts'
 
 export interface Upgrade {
     id: string;
@@ -30,7 +31,7 @@ export const upgrades: Upgrade[] = [
         baseCost: 10,
         costMultiplier: 2.75,
         description: `Increase Beyblade's mass, hits rivals harder (knockback)`,
-        effectText: (lvl) => `${lvl * 1.2} Mass placed`,
+        effectText: (lvl) => `${lvl * 1.5} Mass placed`,
     },
     {
         id: 'dynamo_coil',
@@ -100,16 +101,24 @@ export function getUpgradeCost (upgrade: Upgrade): number {
     return Math.floor(upgrade.baseCost * Math.pow(upgrade.costMultiplier, upgrade.level))
 }
 
-export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade): void {
+export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade, bot: Rivals): void {
     switch (upgrade.id) {
         case 'bearing_tip':
             beyblade.decayRate = 0.05 * Math.pow(0.85, upgrade.level);
+            break;
+        case 'weight_disc':
             break;
         case 'heavy_pullcord':
             beyblade.maxRpm += 100;
             break;
         case 'dynamo_coil':
-            beyblade.energyMultiplier = 1.0 + (upgrade.level * 0.2);
+            beyblade.energyMultiplier = 1.0 + (upgrade.level * 0.4);
+            break;
+        case 'scrap_magnet':
+            break;
+        case 'deployment_frequency':
+            break;
+        case 'rival_overclock':
             break;
     }
 }

@@ -1,6 +1,7 @@
 import './style.css'
 import { Arena } from './arena.ts'
 import { Beyblade } from './beyblade.ts'
+import { Rivals } from './rivals.ts';
 import { applyUpgradeEffect, getUpgradeCost, upgrades, renderUpgradeModule } from './upgrades.ts';
 
 // [ Canvas and its Context ]
@@ -20,6 +21,19 @@ const beyblade = new Beyblade(
   500,
   0.05
 );
+
+const bot = new Rivals(
+  canvas.width / 2,
+  canvas.height / 2,
+  6.0,
+  3.5,
+  500,
+  500,
+  0.05
+);
+
+// Initialization via array
+const tops: Beyblade[] = [beyblade, bot];
 
 // Survival Mode Cycle
 const currentSurvival = document.querySelector<HTMLSpanElement>('#current')!;
@@ -75,6 +89,14 @@ ripcordBtn.addEventListener('click', () => {
   beyblade.rpm = launchRpm;
   beyblade.maxRpm = launchRpm;
 
+  // Reset beyblade(rival) state
+  bot.x = canvas.width / 2 - 100;
+  bot.y = canvas.height / 2;
+  bot.vx = (Math.random() - 0.5) * 2;
+  bot.vy = launchSpeed * (-0.8);
+  bot.rpm = 100;
+  bot.maxRpm = 100;
+
   // Reset round state
   survivalTime = 0;
   isSpinning = true;
@@ -82,7 +104,9 @@ ripcordBtn.addEventListener('click', () => {
 
 // Resource Earning
 const energyAmount = document.querySelector<HTMLSpanElement>('#energy-amount')!;
+const partAmount = document.querySelector<HTMLSpanElement>('#part-amount')!;
 let spinEnergy = 0;
+let rivalPart = 0;
 
 // [ Animation of Canvas ]
 function animate() {
@@ -93,10 +117,29 @@ function animate() {
 
   if (isSpinning) {
     // Physics Simulation
-    arena.handleSlope(beyblade);
-    beyblade.update();
-    arena.handleBoundary(beyblade);
-    beyblade.draw(ctx);  
+    for (const top of tops) {
+      arena.handleSlope(top);
+      top.update();
+      arena.handleBoundary(top);
+      top.draw(ctx);  
+    }
+
+    arena.handleCollision(beyblade, bot);
+
+    // Rival Elimination Check, Rival Respawn, Rival Part Reward
+    if (bot.rpm <= 0) {
+      console.log(rivalPart);
+      bot.x = canvas.width / 2 - 100;
+      bot.y = canvas.height / 2;
+      bot.vx = (Math.random() - 0.5) * 4;
+      bot.vy = (Math.random() - 0.5) * 4;
+      bot.rpm = 100;
+      bot.maxRpm = 100;
+
+      // Part Generation
+      rivalPart += Math.floor(bot.partsReward * beyblade.partMultiplier);
+      partAmount.textContent = Math.floor(rivalPart).toString();
+    }
 
     // Survival Timer
     survivalTime += 1 / 60
@@ -153,7 +196,7 @@ upgradesList.addEventListener('click', (e) => {
   
 
   upgrade.level++;
-  applyUpgradeEffect(upgrade, beyblade);
+  applyUpgradeEffect(upgrade, beyblade, bot);
 
   refreshUpgrades();
   }
