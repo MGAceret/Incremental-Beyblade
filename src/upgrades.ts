@@ -107,18 +107,22 @@ export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade, bot: R
             beyblade.decayRate = 0.05 * Math.pow(0.85, upgrade.level);
             break;
         case 'weight_disc':
+            beyblade.mass = 1 + (upgrade.level * 1.5);
             break;
         case 'heavy_pullcord':
-            beyblade.maxRpm += 100;
+            beyblade.baseMaxRpm = 500 + (upgrade.level * 100);
             break;
         case 'dynamo_coil':
             beyblade.energyMultiplier = 1.0 + (upgrade.level * 0.4);
             break;
         case 'scrap_magnet':
+            beyblade.partMultiplier = 1.0 + (upgrade.level * 0.2);
             break;
         case 'deployment_frequency':
             break;
         case 'rival_overclock':
+            bot.rpm = 600 + (upgrade.level * 1.5);
+            bot.maxRpm = 600 + (upgrade.level * 1.5);
             break;
     }
 }
