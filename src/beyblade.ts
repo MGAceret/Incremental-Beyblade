@@ -19,6 +19,8 @@ export class Beyblade {
     energyMultiplier: number = 1.0;
     partMultiplier: number = 1.0;
 
+    mass: number = 1.0;
+
     constructor(x:number, y: number, vx: number, vy: number, rpm: number, maxRpm: number, decayRate: number) {
         this.x = x;
         this.y = y;
