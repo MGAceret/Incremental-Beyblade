@@ -119,6 +119,7 @@ export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade, bot: R
             beyblade.partMultiplier = 1.0 + (upgrade.level * 0.2);
             break;
         case 'deployment_frequency':
+            bot.spawnDelay = 5.0 - (upgrade.level * 0.5);
             break;
         case 'rival_overclock':
             bot.rpm = 600 + (upgrade.level * 1.5);

@@ -125,24 +125,31 @@ function animate() {
       arena.handleSlope(top);
       top.update();
       arena.handleBoundary(top);
-      top.draw(ctx);  
+      if (top.rpm > 0) top.draw(ctx);  
     }
 
-    arena.handleCollision(beyblade, bot);
+    if (bot.rpm > 0) arena.handleCollision(beyblade, bot);
 
     // Rival Elimination Check, Rival Respawn, Rival Part Reward
     if (bot.rpm <= 0) {
-      console.log(rivalPart);
-      bot.x = canvas.width / 2 - 100;
-      bot.y = canvas.height / 2;
-      bot.vx = (Math.random() - 0.5) * 4;
-      bot.vy = (Math.random() - 0.5) * 4;
-      bot.rpm = 100;
-      bot.maxRpm = 100;
+      if (bot.spawnTimer === 0) {
+          // Part Generation
+        rivalPart += Math.floor(bot.partsReward * beyblade.partMultiplier);
+        partAmount.textContent = Math.floor(rivalPart).toString();
+      }
+      
+      bot.spawnTimer += 1 / 60;
 
-      // Part Generation
-      rivalPart += Math.floor(bot.partsReward * beyblade.partMultiplier);
-      partAmount.textContent = Math.floor(rivalPart).toString();
+      // Spawn Delay check
+      if (bot.spawnTimer >= bot.spawnDelay) {
+        bot.x = canvas.width / 2 - 100;
+        bot.y = canvas.height / 2;
+        bot.vx = (Math.random() - 0.5) * 4;
+        bot.vy = (Math.random() - 0.5) * 4;
+        bot.rpm = 100;
+        bot.maxRpm = 100;
+        bot.spawnTimer = 0;
+      }
     }
 
     // Survival Timer
