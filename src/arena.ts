@@ -1,4 +1,4 @@
-import type { Beyblade } from './beyblade.ts'
+import { Beyblade } from './beyblade.ts'
 
 export class Arena {
     centerX: number;
@@ -96,26 +96,46 @@ export class Arena {
         top.vy *= 0.995;
     }
 
-    handleCollision(top1: Beyblade, top2: Beyblade): void {
+    handleCollision(top1: Beyblade, top2: Beyblade, restitution = 1.3): void {
         const dx = top2.x - top1.x;
         const dy = top2.y - top1.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
         const minDist = top1.radius + top2.radius;
 
+        const vx = dx / dist;
+        const vy = dy / dist;
+        const overlap = minDist - dist;
+        const totalMass = top1.mass + top2.mass;
+
+        const relVx = top2.vx - top1.vx;
+        const relVy = top2.vy - top1.vy;
+
+        const impactSpeed = relVx * vx + relVy + vy;
+        const impulse = impactSpeed * restitution;
+
         // Collision check
         if (dist < minDist) {
-            const vx = dx / dist;
-            const vy = dy / dist;
-            const overlap = minDist - dist;
-            const totalMass = top1.mass + top2.mass;
+            // Position Seperation (Prevents overlapping)
+            top1.x -= vx * overlap * (top2.mass / totalMass);
+            top1.y -= vy * overlap * (top2.mass / totalMass);
 
-            // Collision execution
-            top1.vx -= vx * overlap * (top2.mass / totalMass);
-            top1.vy -= vy * overlap * (top2.mass / totalMass);
+            top2.x += vx * overlap * (top1.mass / totalMass);
+            top2.y += vy * overlap * (top1.mass / totalMass);
 
-            top2.vx += vx * overlap * (top1.mass / totalMass);
-            top2.vy += vy * overlap * (top1.mass / totalMass);
+            // Knockback Check based on velocity
+            if (impactSpeed > 0) {
+                // Knockback execution (Bouncy~)
+                top1.vx -= vx * impulse * (top2.mass / totalMass);
+                top1.vy -= vy * impulse * (top2.mass / totalMass);
+
+                top2.vx += vx * impulse * (top1.mass / totalMass);
+                top2.vy += vy * impulse * (top1.mass / totalMass);
+
+                // RPM damage
+                top1.rpm = Math.max(0, top1.rpm - top2.damage)
+                top2.rpm = Math.max(0, top2.rpm - top1.damage)
+            }
         }
     }
 }
