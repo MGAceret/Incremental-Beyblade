@@ -109,10 +109,15 @@ export class Arena {
             const vx = dx / dist;
             const vy = dy / dist;
             const ov = minDist - dist;
-            top1.vx = vx * (ov / 2);
-            top1.vy = vy * (ov / 2);
-            top2.vx = vx * (ov / 2);
-            top2.vy = vy * (ov / 2);
+            const totalMass = top1.mass + top2.mass;
+
+            // Collision execution
+            top1.vx -= vx * ov * (top2.mass / totalMass);
+            top1.vy -= vy * ov * (top2.mass / totalMass);
+
+            top2.vx += vx * ov * (top1.mass / totalMass);
+            top2.vy += vy * ov * (top1.mass / totalMass);
+
             console.log("Clash!");
         }
     }
