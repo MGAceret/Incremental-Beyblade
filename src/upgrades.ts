@@ -31,7 +31,7 @@ export const upgrades: Upgrade[] = [
         baseCost: 10,
         costMultiplier: 2.75,
         description: `Increase Beyblade's mass, hits rivals harder (knockback)`,
-        effectText: (lvl) => `${lvl * 1.2} Mass placed`,
+        effectText: (lvl) => `${lvl * 1.5} Mass placed`,
     },
     {
         id: 'dynamo_coil',
@@ -107,6 +107,7 @@ export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade, bot: R
             beyblade.decayRate = 0.05 * Math.pow(0.85, upgrade.level);
             break;
         case 'weight_disc':
+            beyblade.mass = 1 + (upgrade.level * 1.5);
             break;
         case 'heavy_pullcord':
             beyblade.baseMaxRpm = 500 + (upgrade.level * 100);
