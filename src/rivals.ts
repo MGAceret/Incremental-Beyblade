@@ -3,6 +3,8 @@ import { Beyblade } from "./beyblade";
 export class Rivals extends Beyblade {
     partsReward = 1;
     damage = 50;
+    spawnDelay = 5.0;
+    spawnTimer = 0;
 
     // Draw the Rival Beyblade
     draw(ctx: CanvasRenderingContext2D): void {
