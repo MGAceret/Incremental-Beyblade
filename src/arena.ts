@@ -108,10 +108,10 @@ export class Arena {
         const overlap = minDist - dist;
         const totalMass = top1.mass + top2.mass;
 
-        const relVx = top2.vx - top1.vx;
-        const relVy = top2.vy - top1.vy;
+        const relVx = top1.vx - top2.vx;
+        const relVy = top1.vy - top2.vy;
 
-        const impactSpeed = relVx * vx + relVy + vy;
+        const impactSpeed = relVx * vx + relVy * vy;
         const impulse = impactSpeed * restitution;
 
         // Collision check
