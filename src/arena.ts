@@ -78,6 +78,8 @@ export class Arena {
             if (dot > 0) {
                 top.vx = (top.vx - 2 * dot * ux) * restitution;
                 top.vy = (top.vy - 2 * dot * uy) * restitution;
+
+                top.rpm -= (top.rpm / 2) * restitution;
             }
         }
     }
