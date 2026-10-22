@@ -71,7 +71,7 @@ export const upgrades: Upgrade[] = [
         baseCost: 15,
         costMultiplier: 2.5,
         description: `Boosts Rival's RPM and increases bonus parts dropped`,
-        effectText: (lvl) => `${lvl * 3} Rival RPM`,  
+        effectText: (lvl) => `${lvl * 2.5} Rival RPM; ${lvl} Bonus Part/s dropped`,  
     },
     {
         id: 'heavy_pullcord',
@@ -122,8 +122,9 @@ export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade, bot: R
             bot.spawnDelay = 5.0 - (upgrade.level * 0.5);
             break;
         case 'rival_overclock':
-            bot.rpm = 600 + (upgrade.level * 1.5);
-            bot.maxRpm = 600 + (upgrade.level * 1.5);
+            bot.rpm = 100 + (upgrade.level * 2.5);
+            bot.maxRpm = 100 + (upgrade.level * 2.5);
+            bot.partsReward = 1 + upgrade.level;
             break;
     }
 }

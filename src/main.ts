@@ -95,8 +95,7 @@ ripcordBtn.addEventListener('click', () => {
   bot.y = canvas.height / 2;
   bot.vx = (Math.random() - 0.5) * 2;
   bot.vy = launchSpeed * (-0.8);
-  bot.rpm = 100;
-  bot.maxRpm = 100;
+  bot.rpm = bot.maxRpm;
 
   // Reset round state
   survivalTime = 0;
@@ -146,8 +145,7 @@ function animate() {
         bot.y = canvas.height / 2;
         bot.vx = (Math.random() - 0.5) * 4;
         bot.vy = (Math.random() - 0.5) * 4;
-        bot.rpm = 100;
-        bot.maxRpm = 100;
+        bot.rpm = bot.maxRpm;
         bot.spawnTimer = 0;
       }
     }
