@@ -92,8 +92,8 @@ export const upgrades: Upgrade[] = [
         effectText: (lvl) => `${lvl * 100} Launch RPM`,
     },
     {
-        id: 'serrated_ring',
-        name: 'Serrated Ring',
+        id: 'blade_ring',
+        name: 'Serrated Blade Ring',
         category: 'chassis',
         level: 0,
         baseEnergyCost: 0,
@@ -102,17 +102,51 @@ export const upgrades: Upgrade[] = [
         description: `Test`,
         effectText: (lvl) => `${lvl * 2} More Damage`,
     },
-    
+    {
+        id: 'arena_capacity',
+        name: 'Arena Capacity',
+        category: 'rivals',
+        level: 0,
+        baseEnergyCost: 200,
+        basePartCost: 25,
+        costMultiplier: 2.75,
+        description: 'Increase maximum available rival beyblades insid the arena.',
+        effectText: (lvl) => `${lvl + 1} Rivals allowed inside`,
+    },
+    {
+        id: 'homing_thruster',
+        name: 'Homing Thrusters',
+        category: 'ripcord',
+        level: 0,
+        baseEnergyCost: 0,
+        basePartCost: 200,
+        costMultiplier: 1.2,
+        description: 'Steers the beyblade to dynamically towards the weakest or nearest rival in the arena',
+        effectText: (lvl) => `${lvl * 1.2}% Tendency to home.` ,
+    },
+    {
+        id: 'auto_launch',
+        name: 'Auto Ripcord Launcher',
+        category: 'ripcord',
+        level: 0,
+        baseEnergyCost: 5000,
+        basePartCost: 1000,
+        costMultiplier: 3,
+        description: 'Automatically re-launches your beyblade when its RPM reaches 0 after a short amount of time',
+        effectText: (lvl) => `${30 - lvl}s launch interval` ,
+    },
+
     /* Upgrade template for the beyblades */
     // {
-    //     id: ,
-    //     name: ,
-    //     category: ,
+    //     id: '',
+    //     name: '',
+    //     category: '',
     //     level: 0,
-    //     baseCost: ,
+    //     baseEnergyCost: ,
+    //     basePartCost: ,
     //     costMultiplier: ,
-    //     description: ,
-    //     effectText: ,
+    //     description: '',
+    //     effectText: (lvl) => `${lvl}` ,
     // },
 ];
 
@@ -148,7 +182,7 @@ export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade, bot: R
             bot.maxRpm = 200 + (upgrade.level * 2.5);
             bot.partsReward = 1 + upgrade.level;
             break;
-        case 'serrated_ring':
+        case 'blade_ring':
             beyblade.damage = 20 + (upgrade.level * 2);
             break;
     }
