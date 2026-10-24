@@ -27,8 +27,8 @@ const bot = new Rivals(
   canvas.height / 2,
   6.0,
   3.5,
-  500,
-  500,
+  200,
+  200,
   0.05
 );
 
@@ -200,9 +200,11 @@ upgradesList.addEventListener('click', (e) => {
   if (!upgrade) return;
 
   const cost = getUpgradeCost(upgrade);
-  if (spinEnergy >= cost) {
-    spinEnergy -= cost;
+  if (spinEnergy >= cost.energy && rivalPart >= cost.part) {
+    spinEnergy -= cost.energy;
+    rivalPart -= cost.part
     energyAmount.textContent = Math.floor(spinEnergy).toString();
+    partAmount.textContent = Math.floor(rivalPart).toString();
   
 
   upgrade.level++;
