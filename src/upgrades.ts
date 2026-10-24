@@ -6,7 +6,8 @@ export interface Upgrade {
     name: string;
     category: 'chassis' | 'ripcord' | 'economy' | 'rivals';
     level: number;
-    baseCost: number;
+    baseEnergyCost: number;
+    basePartCost: number,
     costMultiplier: number;
     description: string;
     effectText: (level: number) => string;
@@ -18,7 +19,8 @@ export const upgrades: Upgrade[] = [
         name: 'Bearing Tip',
         category: 'chassis',
         level: 0,
-        baseCost: 10,
+        baseEnergyCost: 10,
+        basePartCost: 0,
         costMultiplier: 1.5,
         description: 'Reduces spin decay rate so your top spins longer',
         effectText: (lvl) => `${lvl * 15}% Friction Decay`,
@@ -28,7 +30,8 @@ export const upgrades: Upgrade[] = [
         name: 'Weight Disc',
         category: 'chassis',
         level: 0,
-        baseCost: 10,
+        baseEnergyCost: 10,
+        basePartCost: 0,
         costMultiplier: 2.75,
         description: `Increase Beyblade's mass, hits rivals harder (knockback)`,
         effectText: (lvl) => `${lvl * 1.5} Mass placed`,
@@ -38,7 +41,8 @@ export const upgrades: Upgrade[] = [
         name: 'Kinectic Dynamo Coil',
         category: 'economy',
         level: 0,
-        baseCost: 20,
+        baseEnergyCost: 20,
+        basePartCost: 0,
         costMultiplier: 2.5,
         description: 'Harvest more spin energy',
         effectText: (lvl) => `${lvl * 2}% Energy Rate`,
@@ -48,7 +52,8 @@ export const upgrades: Upgrade[] = [
         name: 'Scrap Magnet Core',
         category: 'economy',
         level: 0,
-        baseCost: 15,
+        baseEnergyCost: 15,
+        basePartCost: 0,
         costMultiplier: 2,
         description: 'Magnetizes and recovers bonus parts whenever a rival is eliminated',
         effectText: (lvl) => `${lvl * 1.2}% More parts obtained`,
@@ -58,7 +63,8 @@ export const upgrades: Upgrade[] = [
         name: 'Rival Deployment Frequency',
         category: 'rivals',
         level: 0,
-        baseCost: 12000,
+        baseEnergyCost: 12000,
+        basePartCost: 0,
         costMultiplier: 1.5,
         description: 'Accelerates minimum rival spawn interval',
         effectText: (lvl) => `${60 - lvl}s spawn`,    
@@ -68,7 +74,8 @@ export const upgrades: Upgrade[] = [
         name: 'Rival Torque Overclock',
         category: 'rivals',
         level: 0,
-        baseCost: 15,
+        baseEnergyCost: 15,
+        basePartCost: 0,
         costMultiplier: 2.5,
         description: `Boosts Rival's RPM and increases bonus parts dropped`,
         effectText: (lvl) => `${lvl * 2.5} Rival RPM; ${lvl} Bonus Part/s dropped`,  
@@ -78,10 +85,22 @@ export const upgrades: Upgrade[] = [
         name: 'Heavy Pullcord',
         category: 'ripcord',
         level: 0,
-        baseCost: 50,
+        baseEnergyCost: 50,
+        basePartCost: 0,
         costMultiplier: 2.5,
         description: 'Increases base launch RPM upon Pulling',
         effectText: (lvl) => `${lvl * 100} Launch RPM`,
+    },
+    {
+        id: 'serrated_ring',
+        name: 'Serrated Ring',
+        category: 'chassis',
+        level: 0,
+        baseEnergyCost: 0,
+        basePartCost: 35,
+        costMultiplier: 2,
+        description: `Test`,
+        effectText: (lvl) => `${lvl * 2} More Damage`,
     },
     
     /* Upgrade template for the beyblades */
@@ -97,8 +116,11 @@ export const upgrades: Upgrade[] = [
     // },
 ];
 
-export function getUpgradeCost (upgrade: Upgrade): number {
-    return Math.floor(upgrade.baseCost * Math.pow(upgrade.costMultiplier, upgrade.level))
+export function getUpgradeCost (upgrade: Upgrade) {
+    return {
+        energy: Math.floor(upgrade.baseEnergyCost * Math.pow(upgrade.costMultiplier, upgrade.level)),
+        part: Math.floor(upgrade.basePartCost * Math.pow(upgrade.costMultiplier, upgrade.level))
+    };
 }
 
 export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade, bot: Rivals): void {
@@ -122,9 +144,12 @@ export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade, bot: R
             bot.spawnDelay = 5.0 - (upgrade.level * 0.5);
             break;
         case 'rival_overclock':
-            bot.rpm = 100 + (upgrade.level * 2.5);
-            bot.maxRpm = 100 + (upgrade.level * 2.5);
+            bot.rpm = 200 + (upgrade.level * 2.5);
+            bot.maxRpm = 200 + (upgrade.level * 2.5);
             bot.partsReward = 1 + upgrade.level;
+            break;
+        case 'serrated_ring':
+            beyblade.damage = 20 + (upgrade.level * 2);
             break;
     }
 }
@@ -150,7 +175,8 @@ export function renderUpgradeModule(upgrade: Upgrade): string {
             </div>
             <div class="upgrade-module-footer">
             <button class="buy-upgrade-btn" data-id="${upgrade.id}" type="button">
-                <span>${cost}</span> ⚡
+                <span>${cost.energy > 0 ? `${cost.energy} ⚡` : ''}
+                ${cost.part > 0 ? `${cost.part} ⚙️` : ''}</span>
             </button>
             </div>
         </div>
