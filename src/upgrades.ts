@@ -185,6 +185,9 @@ export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade, bot: R
         case 'blade_ring':
             beyblade.damage = 20 + (upgrade.level * 2);
             break;
+        case 'auto_launch':
+            beyblade.autoLaunchDelay = 10.5 - (upgrade.level * 0.5);
+            break;
     }
 }
 
