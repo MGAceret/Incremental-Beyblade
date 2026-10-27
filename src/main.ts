@@ -61,6 +61,46 @@ function updateRipcord() {
     if (needlePos <= 0) needleDirection = 1;
 
     ripcordNeedle.style.left = `${needlePos}%`
+    
+    if (beyblade.autoLaunchDelay) {
+      beyblade.autoLaunchTimer += 1/60;
+      if (beyblade.autoLaunchTimer >= beyblade.autoLaunchDelay) {
+        const accuracy = Math.abs(needlePos - 50);
+        let launchRpm = beyblade.maxRpm;
+        let launchSpeed = null;
+
+        if (accuracy <= 5) {
+          // Critical Launch
+          launchRpm = beyblade.baseMaxRpm * 2;
+          launchSpeed = 8.0;
+        } else {
+          // Weak Launch
+          launchRpm = beyblade.baseMaxRpm * 0.6;
+          launchSpeed = 3.0;
+        }
+
+        // Reset beyblade state 
+        beyblade.x = canvas.width / 2 + 100;
+        beyblade.y = canvas.height / 2;
+        beyblade.vx = (Math.random() - 0.5) * 2;
+        beyblade.vy = launchSpeed;
+        beyblade.rpm = launchRpm;
+        beyblade.maxRpm = launchRpm;
+
+        // Reset beyblade(rival) state
+        bot.x = canvas.width / 2 - 100;
+        bot.y = canvas.height / 2;
+        bot.vx = (Math.random() - 0.5) * 2;
+        bot.vy = launchSpeed * (-0.8);
+        bot.rpm = bot.maxRpm;
+
+        // Reset round state
+        survivalTime = 0;
+        isSpinning = true;
+
+        beyblade.autoLaunchTimer = 0;
+      }
+    }
   }
 }
 
