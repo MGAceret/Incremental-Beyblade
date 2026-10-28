@@ -135,7 +135,17 @@ export const upgrades: Upgrade[] = [
         description: 'Automatically re-launches your beyblade when its RPM reaches 0 after a short amount of time',
         effectText: (lvl) => `${30.5 - lvl}s launch interval` ,
     },
-
+    {
+        id: 'rival_erratic',
+        name: 'Rival Erratic Drift',
+        category: 'rivals',
+        level: 0,
+        baseEnergyCost: 200,
+        basePartCost: 0,
+        costMultiplier: 2.5,
+        description: 'Enables rivals to move and turn unexpectedly',
+        effectText: (lvl) => `${lvl}% to move unexpectedly` ,
+    },
     /* Upgrade template for the beyblades */
     // {
     //     id: '',
@@ -187,6 +197,9 @@ export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade, bot: R
             break;
         case 'auto_launch':
             beyblade.autoLaunchDelay = 30.5 - (upgrade.level * 0.5);
+            break;
+        case 'rival_erratic':
+            bot.erraticDrift = 0 + (upgrade.level * 5);
             break;
     }
 }
