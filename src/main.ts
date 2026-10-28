@@ -63,7 +63,7 @@ function updateRipcord() {
     ripcordNeedle.style.left = `${needlePos}%`
     
     if (beyblade.autoLaunchDelay) {
-      beyblade.autoLaunchTimer += 1/60;
+      beyblade.autoLaunchTimer += 1/144;
       if (beyblade.autoLaunchTimer >= beyblade.autoLaunchDelay) {
         const accuracy = Math.abs(needlePos - 50);
         let launchRpm = beyblade.maxRpm;
@@ -106,6 +106,7 @@ function updateRipcord() {
 
 // Ripcord Launch
 ripcordBtn.addEventListener('click', () => {
+  beyblade.autoLaunchTimer = 0; // Reset auto launch if it was triggered manually
   if (isSpinning) return; // Cannot launch if the beyblade is still active
 
   const accuracy = Math.abs(needlePos - 50);

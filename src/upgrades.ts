@@ -133,7 +133,7 @@ export const upgrades: Upgrade[] = [
         basePartCost: 1000,
         costMultiplier: 3,
         description: 'Automatically re-launches your beyblade when its RPM reaches 0 after a short amount of time',
-        effectText: (lvl) => `${30 - lvl}s launch interval` ,
+        effectText: (lvl) => `${30.5 - lvl}s launch interval` ,
     },
 
     /* Upgrade template for the beyblades */
@@ -186,7 +186,7 @@ export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade, bot: R
             beyblade.damage = 20 + (upgrade.level * 2);
             break;
         case 'auto_launch':
-            beyblade.autoLaunchDelay = 10.5 - (upgrade.level * 0.5);
+            beyblade.autoLaunchDelay = 30.5 - (upgrade.level * 0.5);
             break;
     }
 }
