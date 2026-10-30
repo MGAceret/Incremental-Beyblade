@@ -5,12 +5,16 @@ export class Rivals extends Beyblade {
     damage = 50;
     spawnDelay = 5.0;
     spawnTimer = 0;
-    erraticDrift = 0;
+    erraticDrift = 10;
+    erraticChance = 0;
 
     update(): void {
         super.update();
-        this.vx += (Math.random() - 0.5) * this.erraticDrift
-        this.vx += (Math.random() - 0.5) * this.erraticDrift
+
+        if (Math.random() * 100 < this.erraticChance / 144) {
+            this.vx += (Math.random() - 0.5) * this.erraticDrift
+            this.vx += (Math.random() - 0.5) * this.erraticDrift
+        }
     }
 
     // Draw the Rival Beyblade
