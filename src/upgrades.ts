@@ -146,6 +146,17 @@ export const upgrades: Upgrade[] = [
         description: 'Enables rivals to move and turn unexpectedly',
         effectText: (lvl) => `${lvl}% to move unexpectedly` ,
     },
+    {
+        id: 'critical_overdrive',
+        name: 'Critical Overdrive',
+        category: 'ripcord',
+        level: 0,
+        baseEnergyCost: 1,
+        basePartCost: 0,
+        costMultiplier: 4,
+        description: 'Increases multiplier of critical launch',
+        effectText: (lvl) => `${lvl}` ,
+    },
     /* Upgrade template for the beyblades */
     // {
     //     id: '',
@@ -201,6 +212,10 @@ export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade, bot: R
         case 'rival_erratic':
             bot.erraticChance = 0 + (upgrade.level * 5);
             break;
+        case 'critical_overdrive':
+            beyblade.critMultiplier = 0 +(upgrade.level + 1);
+            break;
+
     }
 }
 
