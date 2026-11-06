@@ -13,7 +13,7 @@ export class Rivals extends Beyblade {
 
         if (Math.random() * 100 < this.erraticChance / 144) {
             this.vx += (Math.random() - 0.5) * this.erraticDrift
-            this.vx += (Math.random() - 0.5) * this.erraticDrift
+            this.vy += (Math.random() - 0.5) * this.erraticDrift
         }
     }
 
