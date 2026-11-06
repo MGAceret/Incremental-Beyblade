@@ -71,7 +71,7 @@ function updateRipcord() {
 
         if (accuracy <= 5) {
           // Critical Launch
-          launchRpm = beyblade.baseMaxRpm * 2;
+          launchRpm = beyblade.baseMaxRpm * beyblade.critMultiplier;
           launchSpeed = 8.0;
         } else {
           // Weak Launch
@@ -115,7 +115,7 @@ ripcordBtn.addEventListener('click', () => {
 
   if (accuracy <= 5) {
     // Critical Launch
-    launchRpm = beyblade.baseMaxRpm * 2;
+    launchRpm = beyblade.baseMaxRpm * beyblade.critMultiplier;
     launchSpeed = 8.0;
   } else {
     // Weak Launch
