@@ -42,6 +42,7 @@ const speedText = document.querySelector<HTMLSpanElement>('.gauge-header span:la
 const speedBarFill = document.querySelector<HTMLDivElement>('.gauge-bar-fill')!;
 const ripcordNeedle = document.querySelector<HTMLDivElement>('.ripcord-needle')!;
 const ripcordBtn = document.querySelector<HTMLButtonElement>('#ripcord-btn')!;
+const ripcordTarget = document.querySelector<HTMLDivElement>('.ripcord-target')!;
 
 // Game State
 let isSpinning = false;
@@ -69,7 +70,7 @@ function updateRipcord() {
         let launchRpm = beyblade.maxRpm;
         let launchSpeed = null;
 
-        if (accuracy <= 5) {
+        if (accuracy <= beyblade.critWindow) {
           // Critical Launch
           launchRpm = beyblade.baseMaxRpm * beyblade.critMultiplier;
           launchSpeed = 8.0;
@@ -113,7 +114,7 @@ ripcordBtn.addEventListener('click', () => {
   let launchRpm = beyblade.maxRpm;
   let launchSpeed = null;
 
-  if (accuracy <= 5) {
+  if (accuracy <= beyblade.critWindow) {
     // Critical Launch
     launchRpm = beyblade.baseMaxRpm * beyblade.critMultiplier;
     launchSpeed = 8.0;
@@ -250,6 +251,9 @@ upgradesList.addEventListener('click', (e) => {
 
   upgrade.level++;
   applyUpgradeEffect(upgrade, beyblade, bot);
+
+  ripcordTarget.style.left = `${50 - beyblade.critWindow}%`;
+  ripcordTarget.style.width = `${beyblade.critWindow * 2}%`;
 
   refreshUpgrades();
   }
