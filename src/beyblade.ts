@@ -25,7 +25,8 @@ export class Beyblade {
     autoLaunchDelay: number = 0;
     autoLaunchTimer: number = 0;
 
-    critMultiplier: number = 0;
+    critMultiplier: number = 2;
+    critWindow: number = 5;
 
     constructor(x:number, y: number, vx: number, vy: number, rpm: number, maxRpm: number, decayRate: number) {
         this.x = x;

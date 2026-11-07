@@ -157,6 +157,17 @@ export const upgrades: Upgrade[] = [
         description: 'Increases multiplier of critical launch',
         effectText: (lvl) => `${lvl}` ,
     },
+    {
+        id: 'proto_stabilizer',
+        name: 'Protoype Stabilizer',
+        category: 'ripcord',
+        level: 0,
+        baseEnergyCost: 1,
+        basePartCost: 0,
+        costMultiplier: 1,
+        description: 'Test',
+        effectText: (lvl) => `${lvl}` ,
+    },
     /* Upgrade template for the beyblades */
     // {
     //     id: '',
@@ -215,7 +226,9 @@ export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade, bot: R
         case 'critical_overdrive':
             beyblade.critMultiplier = 0 +(upgrade.level + 1);
             break;
-
+        case 'proto_stabilizer':
+            beyblade.critWindow = 5 + (upgrade.level + 1);
+            break;
     }
 }
 
