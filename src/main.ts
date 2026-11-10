@@ -215,6 +215,17 @@ function animate() {
         recordTime = survivalTime;
         recordSurvival.textContent = `Record: ${recordTime.toFixed(1)}s`
       }
+      // Check crit window opportunity
+      if (Math.random() * 100 < beyblade.stabilizerChance) {
+        beyblade.critWindow = beyblade.baseCritWindow;
+        ripcordTarget.style.left = `${50 - beyblade.critWindow}%`;
+        ripcordTarget.style.width = `${beyblade.critWindow * 2}%`;
+      } else {
+        // Default crit state
+        beyblade.critWindow = 5;
+        ripcordTarget.style.left = `${45}%`;
+        ripcordTarget.style.width = `${10}%`;
+      }
     }
   }
     
@@ -252,8 +263,6 @@ upgradesList.addEventListener('click', (e) => {
   upgrade.level++;
   applyUpgradeEffect(upgrade, beyblade, bot);
 
-  ripcordTarget.style.left = `${50 - beyblade.critWindow}%`;
-  ripcordTarget.style.width = `${beyblade.critWindow * 2}%`;
 
   refreshUpgrades();
   }

@@ -227,7 +227,8 @@ export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade, bot: R
             beyblade.critMultiplier = 0 +(upgrade.level + 1);
             break;
         case 'proto_stabilizer':
-            beyblade.critWindow = 5 + (upgrade.level + 1);
+            beyblade.baseCritWindow = 5 + (upgrade.level + 1);
+            beyblade.stabilizerChance = 0 + (upgrade.level + 50);
             break;
     }
 }
