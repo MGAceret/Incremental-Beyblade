@@ -34,7 +34,7 @@ $$\text{Cost}(\text{Level}) = \lfloor \text{BaseCost} \times (\text{CostMultipli
 | `dynamo_coil` | **Kinetic Dyamo Coil** | 4 | 20 | 2.5 | Harvest more spin energy | `TBA` |
 | `scrap_magnet` | **Scrap Magnet Core** | 5 | 15 | 2 | Magentizes and recovers bonus parts whenever a rival is eliminated | `TBA` |
 | `endurance_overclock` | **Endurance Overclock** | 1 | 5 Parts | 1.5 | Increase energy generation according to surival time. The longer the higher generation | `TBA` |
-| `end_bonus` | **Endyrance Bonus** | 1 | 5 Parts | 1.5 | Doubles Energy gain by nx for every minute has elapsed| `TBA` |
+| `end_bonus` | **Endurance Bonus** | 1 | 5 Parts | 1.5 | Doubles Energy gain by nx for every minute has elapsed| `TBA` |
 | `elim_streak` | **Elimination Streak** | 1 | 5 Parts | 1.5 | Doubles parts dropped after eliminating a minimum of n rivals in a row | `TBA` |
 
 
