@@ -99,7 +99,7 @@ export const upgrades: Upgrade[] = [
         baseEnergyCost: 0,
         basePartCost: 35,
         costMultiplier: 2,
-        description: `Test`,
+        description: `Increases RPM drain dealt to rival beyblades`,
         effectText: (lvl) => `${lvl * 2} More Damage`,
     },
     {
@@ -133,7 +133,7 @@ export const upgrades: Upgrade[] = [
         basePartCost: 1000,
         costMultiplier: 3,
         description: 'Automatically re-launches your beyblade when its RPM reaches 0 after a short amount of time',
-        effectText: (lvl) => `${30.5 - lvl}s launchz interval` ,
+        effectText: (lvl) => `${30.5 - lvl}s launch interval` ,
     },
     {
         id: 'rival_erratic',
@@ -165,8 +165,8 @@ export const upgrades: Upgrade[] = [
         baseEnergyCost: 1,
         basePartCost: 0,
         costMultiplier: 1,
-        description: 'Test',
-        effectText: (lvl) => `${lvl}` ,
+        description: 'Chance to widen the critical launch window by random percentage',
+        effectText: (lvl) => `${lvl + 5} to widen, ${lvl * 2} increased critical window` ,
     },
     /* Upgrade template for the beyblades */
     // {
