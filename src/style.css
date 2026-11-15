@@ -144,6 +144,7 @@ header {
   border-radius: 20px;
   height: 24px;
   background: var(--text-light);
+  overflow: hidden;
 }
 
 .gauge-bar-fill {
@@ -207,10 +208,11 @@ header {
 /* [ Right Column: Upgrades ] */
 .upgrade-container {
   background-color: var(--text-light);
-  border: 1px solid black;
+  border: 2px solid var(--border-dark);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .resources {
@@ -233,6 +235,7 @@ header {
 .upgrade-category {
   display: flex;
   width: 100%;
+  box-shadow: 0 8px 10px rgb(0 0 0 / 0.2);
 }
 
 .category-btn {
@@ -272,6 +275,7 @@ header {
 .upgrade-module-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .upgrade-module-header h2 {
@@ -287,12 +291,17 @@ header {
   color: var(--accent-brown);
 }
 
+.upgrade-module-level h2 {
+  font-size: 1rem;
+}
+
 .upgrade-module-desc {
 
 }
 
 .upgrade-module-effect {
   color: var(--accent-amber);
+  font-weight: 700;
 }
 
 .upgrade-module-footer {
@@ -307,6 +316,8 @@ header {
   border-radius: 20px;
   padding: 6px 15px;
   width: 100%;
+  font-size: 1rem;
+  font-weight: 700;
 }
 
 .upgrade-module-footer button:hover,
