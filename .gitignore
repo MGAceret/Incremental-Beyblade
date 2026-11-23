@@ -27,3 +27,5 @@ dist-ssr
 .agents/
 learning/
 GEMINI.md
+
+.impeccable/
