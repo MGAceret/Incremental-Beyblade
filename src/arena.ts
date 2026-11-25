@@ -79,7 +79,7 @@ export class Arena {
                 top.vx = (top.vx - 2 * dot * ux) * restitution;
                 top.vy = (top.vy - 2 * dot * uy) * restitution;
 
-                top.rpm -= (top.rpm / 2) * restitution;
+                top.rpm -= (top.rpm / (2 + top.shockBumper)) * restitution;
             }
         }
     }
