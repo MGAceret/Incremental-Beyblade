@@ -168,6 +168,17 @@ export const upgrades: Upgrade[] = [
         description: 'Chance to widen the critical launch window by random percentage',
         effectText: (lvl) => `${lvl + 5} to widen, ${lvl * 2} increased critical window` ,
     },
+    {
+        id: 'shock_bumper',
+        name: 'Shock-Absorbing Bumper',
+        category: 'chassis',
+        level: 0,
+        baseEnergyCost: 0,
+        basePartCost: 0,
+        costMultiplier: 0,
+        description: `Reduces RPM damage received when colliding with the arena's boundary`,
+        effectText: (lvl) => `${lvl}` ,
+    },
     /* Upgrade template for the beyblades */
     // {
     //     id: '',
@@ -229,6 +240,9 @@ export function applyUpgradeEffect (upgrade: Upgrade, beyblade: Beyblade, bot: R
         case 'proto_stabilizer':
             beyblade.baseCritWindow = 5 + (upgrade.level + 1);
             beyblade.stabilizerChance = 0 + (upgrade.level + 50);
+            break;
+        case 'shock_bumper':
+            beyblade.shockBumper = 0 + (upgrade.level + 1);
             break;
     }
 }
