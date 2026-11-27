@@ -174,10 +174,10 @@ export const upgrades: Upgrade[] = [
         category: 'chassis',
         level: 0,
         baseEnergyCost: 0,
-        basePartCost: 0,
-        costMultiplier: 0,
+        basePartCost: 5,
+        costMultiplier: 1.5,
         description: `Reduces RPM damage received when colliding with the arena's boundary`,
-        effectText: (lvl) => `${lvl}` ,
+        effectText: (lvl) => `${lvl + 1}% Less damage received` ,
     },
     /* Upgrade template for the beyblades */
     // {
